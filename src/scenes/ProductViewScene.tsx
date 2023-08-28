@@ -1,10 +1,14 @@
 import { useParams } from "react-router-dom";
 import { MainContent } from "../components/main-content/MainContent";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadProduct } from "./Product.slice";
+import { AppDispatch } from "../store";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useProductDetails() {
     const { productId } = useParams<"productId">();
+    const dispatch = useDispatch<AppDispatch>();
 
     if (productId === undefined) {
         // delegate to route error handler
@@ -12,15 +16,14 @@ export function useProductDetails() {
     }
 
     useEffect(() => {
-        // load product info
-        console.log({ productId });
-    }, [productId]);
+        dispatch(loadProduct(+productId));
+    }, [productId, dispatch]);
 
-    return { productId, productName: "Intelligent Finite Elements in Structural mechanics" };
+    return { productId };
 }
 
-export function ProductViewScene() {
-    const { productId, productName } = useProductDetails();
+export function ProductDetailsScene() {
+    const { productId } = useProductDetails();
 
-    return <MainContent isView={true} productName={productName} productId={+productId} />;
+    return <MainContent productId={+productId} />;
 }

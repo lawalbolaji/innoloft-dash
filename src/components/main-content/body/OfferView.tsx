@@ -1,3 +1,4 @@
+import { Product } from "../../../scenes/Product.slice";
 import { ClockIcon } from "../../shared/icons/ClockIcon";
 import { KnightIcon } from "../../shared/icons/KnightIcon";
 import { MoneyBagIcon } from "../../shared/icons/MoneyBagIcon";
@@ -7,8 +8,12 @@ import { SettingsIcon } from "../../shared/icons/SettingsIcon";
 type OfferViewProps = {
     trl: {
         id: number;
-        label: string;
+        name: string;
     };
+    categories: Product["categories"];
+    type: Product["type"];
+    businessModels: Product["businessModels"];
+    investmentEffort: Product["investmentEffort"];
 };
 
 export function Banner({ label }: { label: string }) {
@@ -21,7 +26,7 @@ export function Banner({ label }: { label: string }) {
     );
 }
 
-export function OfferView({ trl }: OfferViewProps) {
+export function OfferView({ trl, categories, type, businessModels, investmentEffort }: OfferViewProps) {
     return (
         <div className="w-full">
             <div className="w-full">
@@ -35,11 +40,14 @@ export function OfferView({ trl }: OfferViewProps) {
                                 </div>
                                 <div className="px-3">
                                     <div className="flex flex-col gap-1">
-                                        <div>Technology</div>
+                                        <div>{type.name}</div>
                                         <div className="flex flex-row gap-2 justify-start">
-                                            {["label 1", "label 2", "label 3"].map((label, idx) => (
-                                                <Banner key={idx} label={label} />
-                                            ))}
+                                            {categories
+                                                .map((category) => category.name)
+                                                .slice(0, 3)
+                                                .map((label, idx) => (
+                                                    <Banner key={idx} label={label} />
+                                                ))}
                                         </div>
                                     </div>
                                 </div>
@@ -54,9 +62,12 @@ export function OfferView({ trl }: OfferViewProps) {
                                     <div className="flex flex-col gap-1">
                                         <div>Business Model</div>
                                         <div className="flex flex-row gap-2 justify-start">
-                                            {["label 1", "label 2", "label 3"].map((label, idx) => (
-                                                <Banner key={idx} label={label} />
-                                            ))}
+                                            {businessModels
+                                                .map((model) => model.name)
+                                                .slice(0, 3)
+                                                .map((label, idx) => (
+                                                    <Banner key={idx} label={label} />
+                                                ))}
                                         </div>
                                     </div>
                                 </div>
@@ -67,13 +78,13 @@ export function OfferView({ trl }: OfferViewProps) {
                                 <div>
                                     <ClockIcon />
                                 </div>
-                                <div className="px-3">
+                                <div className="px-3 w-full">
                                     <div className="flex flex-col gap-1">
                                         <div>TRL</div>
                                         <div className="flex flex-row gap-2 justify-start w-full">
                                             <div className="w-full">
                                                 <span className="inline-block whitespace-nowrap	overflow-hidden text-ellipsis w-[80%] py-1 px-2 rounded-full text-xs bg-[#E5E7EB] text-[#6B7280]">
-                                                    TRL {trl.id} - {trl.label}
+                                                    {trl.name}
                                                 </span>
                                             </div>
                                         </div>
@@ -91,7 +102,7 @@ export function OfferView({ trl }: OfferViewProps) {
                                         <div>Cost</div>
                                         <div className="flex flex-row gap-2 justify-start">
                                             <div>
-                                                <Banner label={"< 1000£"} />
+                                                <Banner label={investmentEffort} />
                                             </div>
                                         </div>
                                     </div>

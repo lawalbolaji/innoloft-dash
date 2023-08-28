@@ -1,27 +1,21 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { NavBar } from "./components/Navbar";
 import { Profile } from "./components/profile/Profile";
-import { ProductViewScene } from "./scenes/ProductViewScene";
+import { ProductDetailsScene } from "./scenes/ProductViewScene";
 import { ProductListScene } from "./scenes/ProductListScene";
-import { ProductEditScene } from "./scenes/ProductEditScene";
-import { Error404 } from "./components/errors/Error404";
+import { ErrorComponent } from "./components/errors/Error";
 
 // this is where router will earn its money
 const router = createBrowserRouter([
     {
         path: "/",
         element: <ProductListScene />,
-        errorElement: <Error404 />,
+        errorElement: <ErrorComponent is404={true} />,
     },
     {
-        path: "/:productId/view",
-        element: <ProductViewScene />,
-        errorElement: <Error404 />,
-    },
-    {
-        path: "/:productId/Edit",
-        element: <ProductEditScene />,
-        errorElement: <Error404 />,
+        path: "/:productId/:mode",
+        element: <ProductDetailsScene />,
+        errorElement: <ErrorComponent is404={true} />,
     },
 ]);
 

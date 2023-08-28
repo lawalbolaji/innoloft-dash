@@ -1,36 +1,43 @@
+import { Product } from "../../../scenes/Product.slice";
 import { OfferView } from "./OfferView";
 import { ProductView } from "./ProductView";
 import { VideoView } from "./VideoView";
 
-const productViewProps = {
-    title: "Some long descriptive header",
-    description:
-        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    mainImageUrl: "https://placehold.co/500x300",
-    profileImageUrl:
-        "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
-    address: {
-        line1: "Jülicher Straße 72a",
-        line2: "52070 Aachen, Germany",
-    },
-};
+function convertYoutubeViewUrlToEmbed(url: string) {
+    if (url.match(/^(https?:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/)) {
+        const urlObj = new URL(url);
+        const videoId = urlObj.searchParams.get("v");
 
-export function MainContentBody({ isView }: { isView: boolean }) {
+        if (videoId !== null) {
+            return `https://${urlObj.hostname}/embed/${videoId}`;
+        }
+    }
+
+    return url;
+}
+
+export function MainContentBody({ isView, productDetails }: { isView: boolean; productDetails: Product }) {
     return (
         <>
             <div className="bg-white">
                 <div className="h-full shadow-md">
-                    <ProductView {...{ ...productViewProps, isView }} />
+                    <ProductView isView={isView} productDetails={productDetails} />
                 </div>
             </div>
             <div className="w-full bg-white">
                 <div className="shadow-md">
-                    <VideoView videoUrl="https://www.youtube.com/watch?v=9x7hZmHlpto" isView={isView} />
+                    <VideoView videoUrl={convertYoutubeViewUrlToEmbed(productDetails.video)} isView={isView} />
                 </div>
             </div>
             <div className="bg-white">
                 <div className="h-full shadow-md">
-                    <OfferView trl={{ id: 9, label: "Actual System Proven in Operational Environment" }} />
+                    <OfferView
+                        trl={productDetails.trl}
+                        type={productDetails.type}
+                        categories={productDetails.categories}
+                        businessModels={productDetails.businessModels}
+                        investmentEffort={productDetails.investmentEffort}
+                    />
                 </div>
             </div>
         </>
