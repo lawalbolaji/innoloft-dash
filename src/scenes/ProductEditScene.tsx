@@ -1,6 +1,8 @@
 import { MainContent } from "../components/main-content/MainContent";
-import { SceneBuilder } from "../components/scene-builder/SceneBuilder";
+import { useProductDetails } from "./ProductViewScene";
 
 export function ProductEditScene() {
-    return <SceneBuilder scene={<MainContent isView={false} />} />;
+    const { productId, productName } = useProductDetails();
+
+    return <MainContent isView={false} productName={productName} productId={+productId} />;
 }

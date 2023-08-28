@@ -1,18 +1,20 @@
 import { ArrowRightIcon } from "../../shared/icons/ArrowRightIcon";
 import { HomeIcon } from "../../shared/icons/HomeIcon";
 import { MainContentHeaderProps } from "./MainContentHeader";
+import { Link } from "react-router-dom";
 
 export function BreadCrumbs({ paths }: { paths: MainContentHeaderProps["paths"] }) {
     return (
         <div className="flex-auto py-4">
             <ol className="flex items-center whitespace-nowrap min-w-0" aria-label="Breadcrumb">
                 <li className="text-sm">
-                    <a className="flex items-center text-gray-500 hover:font-bold select-none cursor-pointer" href="#">
+                    <Link className="flex items-center text-gray-500 hover:font-bold select-none cursor-pointer" to="/">
                         <div className="">
                             <HomeIcon />
                         </div>
+
                         <ArrowRightIcon />
-                    </a>
+                    </Link>
                 </li>
                 {paths.map((path, idx) => {
                     if (idx === paths.length - 1) {
@@ -29,13 +31,13 @@ export function BreadCrumbs({ paths }: { paths: MainContentHeaderProps["paths"] 
 
                     return (
                         <li className="text-sm" key={idx}>
-                            <a
+                            <Link
                                 className="flex items-center text-gray-500 hover:font-bold hover:underline select-none cursor-pointer"
-                                href="#"
+                                to={path.url}
                             >
                                 {path.label}
                                 <ArrowRightIcon />
-                            </a>
+                            </Link>
                         </li>
                     );
                 })}

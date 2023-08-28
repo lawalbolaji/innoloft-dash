@@ -3,10 +3,12 @@ import { Profile } from "../profile/Profile";
 
 export function SceneBuilder({ scene }: { scene: JSX.Element }) {
     return (
-        <div className="h-screen">
+        <div className="h-screen w-screen min-w-fit bg-[#F9FAFB]">
             <NavBar />
-            <div className="flex flex-row w-full bg-[#F9FAFB]" style={{ height: "calc(100% - 55px)" }}>
+            <div className="container m-auto flex flex-row w-full" style={{ height: "calc(100% - 55px)" }}>
                 <Profile />
+
+                {/* <RouterProvider /> */}
                 {scene}
             </div>
         </div>

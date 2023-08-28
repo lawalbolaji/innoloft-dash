@@ -1,4 +1,3 @@
-import { OfferEdit, ProductEdit, VideoEdit } from "../../MainContentEdit";
 import { OfferView } from "./OfferView";
 import { ProductView } from "./ProductView";
 import { VideoView } from "./VideoView";
@@ -21,21 +20,17 @@ export function MainContentBody({ isView }: { isView: boolean }) {
         <>
             <div className="bg-white">
                 <div className="h-full shadow-md">
-                    {isView ? <ProductView {...productViewProps} /> : <ProductEdit />}
+                    <ProductView {...{ ...productViewProps, isView }} />
                 </div>
             </div>
             <div className="w-full bg-white">
                 <div className="shadow-md">
-                    {isView ? <VideoView videoUrl="https://www.youtube.com/watch?v=9x7hZmHlpto" /> : <VideoEdit />}
+                    <VideoView videoUrl="https://www.youtube.com/watch?v=9x7hZmHlpto" isView={isView} />
                 </div>
             </div>
             <div className="bg-white">
                 <div className="h-full shadow-md">
-                    {isView ? (
-                        <OfferView trl={{ id: 9, label: "Actual System Proven in Operational Environment" }} />
-                    ) : (
-                        <OfferEdit />
-                    )}
+                    <OfferView trl={{ id: 9, label: "Actual System Proven in Operational Environment" }} />
                 </div>
             </div>
         </>

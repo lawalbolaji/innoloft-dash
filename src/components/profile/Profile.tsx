@@ -26,7 +26,7 @@ const menuItems: Array<MenuItem> = [
 export function Profile() {
     return (
         <div className="min-w-[25%] text-base hidden md:block">
-            <div className="mt-[10%] w-full pl-[30%] pr-[10%]">
+            <div className="mt-[10%] w-full px-4">
                 {/* <!-- User Profile --> */}
                 <ProfileHero
                     name="Rasheed Lawal"
@@ -40,7 +40,9 @@ export function Profile() {
                         {menuItems.map((menuItem, idx) => (
                             <div key={idx} className="flex flex-row gap-x-4">
                                 <div className="my-auto select-none">{menuItem.icon}</div>
-                                <div className="select-none cursor-pointer hover:font-bold">{menuItem.label}</div>
+                                <div className="select-none cursor-pointer transition ease-in-out delay-0 hover:font-bold hover:scale-110 duration-300">
+                                    {menuItem.label}
+                                </div>
                             </div>
                         ))}
                     </div>
