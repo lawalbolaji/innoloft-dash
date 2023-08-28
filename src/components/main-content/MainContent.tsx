@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ErrorComponent } from "../errors/Error";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type Mode = "edit" | "view";
 function isModeType(x: string): x is Mode {
@@ -24,7 +26,13 @@ export function MainContent({ productId }: { productId: number }) {
     const loadingState = useSelector((state: RootState) => state.product.status);
     const productDetails = useSelector((state: RootState) => state.product.entity);
     const pageMap: Record<Mode[number], JSX.Element> = {
-        loading: <div>Loading Product Details</div>,
+        loading: (
+            <SkeletonTheme baseColor="#fff" highlightColor="#c0c0c0">
+                <p className="w-full">
+                    <Skeleton count={20} className="h-[40px]" />
+                </p>
+            </SkeletonTheme>
+        ),
         success: (
             <div className="flex-auto py-4 px-2 h-full">
                 <div className="flex flex-col gap-y-4 h-full w-full overflow-auto hide-scroll">
