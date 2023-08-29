@@ -5,11 +5,12 @@ export function ProductEdit() {
                 <div className="mb-2">
                     <input
                         type="text"
-                        className="py-2 px-3 block w-full text-black bg-white border border-[#D1D5DB] rounded text-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="py-2 px-3 block w-full font-semibold text-black bg-white border border-[#D1D5DB] rounded text-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Intelligent Finite Elements in Structural mechanics"
                     />
                 </div>
                 <div className="h-[200px] border border-[#D1D5DB] rounded mb-4">
+                    {/* <!-- WYSIWYG --> */}
                     <div>Editor</div>
                 </div>
                 <div className="flex flex-row justify-end mb-4 gap-4">

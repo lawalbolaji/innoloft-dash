@@ -20,7 +20,7 @@ export function BreadCrumbs({ paths }: { paths: MainContentHeaderProps["paths"] 
                     if (idx === paths.length - 1) {
                         return (
                             <li
-                                className="text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
+                                className="text-sm text-gray-500 font-semibold truncate select-none"
                                 aria-current="page"
                                 key={idx}
                             >
