@@ -20,17 +20,17 @@ export function MainContentBody({ isView, productDetails }: { isView: boolean; p
     return (
         <>
             <div className="bg-white">
-                <div className="h-full shadow-md">
+                <div className="h-full border">
                     <ProductView isView={isView} productDetails={productDetails} />
                 </div>
             </div>
-            <div className="w-full bg-white">
-                <div className="shadow-md">
+            <div className="w-full bg-white border">
+                <div className="">
                     <VideoView videoUrl={convertYoutubeViewUrlToEmbed(productDetails.video)} isView={isView} />
                 </div>
             </div>
-            <div className="bg-white">
-                <div className="h-full shadow-md">
+            <div className="bg-white border">
+                <div className="h-full">
                     <OfferView
                         trl={productDetails.trl}
                         type={productDetails.type}

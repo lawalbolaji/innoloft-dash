@@ -1,26 +1,37 @@
 import { Product } from "../../../scenes/Product.slice";
 import { ProfileHero } from "../../profile/ProfileHero";
-import { InnoloftIconPrimary } from "../../shared/icons/InnoloftIconPrimary";
 import { LocationIcon } from "../../shared/icons/LocationIcon";
 
 export function ProductOwnerMeta({
     profileImageUrl,
     address,
+    companyName,
+    userFirstName,
+    userLastName,
+    companyLogoUrl,
 }: {
     profileImageUrl: string;
     address: Product["company"]["address"];
+    companyName: string;
+    userFirstName: string;
+    userLastName: string;
+    companyLogoUrl: string;
 }) {
     return (
-        <div className="md:flex-auto md:text-xs md:w-auto w-full pb-4 md:pb-0">
+        <div className="md:flex-auto md:text-xs md:w-auto md:border-l w-full pb-4 md:pb-0">
             <div className="px-[5%]">
-                <div className="pt-2 pb-1 text-sm">Offered By</div>
+                <div className="py-4 text-sm">Offered By</div>
                 <div className="pb-2">
                     <div>
-                        <InnoloftIconPrimary />
+                        <img src={companyLogoUrl} alt="company logo" />
                     </div>
                 </div>
                 <div className="py-2">
-                    <ProfileHero name="Rasheed Lawal" company="Innoloft Gmbh" imageUrl={profileImageUrl} />
+                    <ProfileHero
+                        name={`${userFirstName} ${userLastName}`}
+                        company={companyName}
+                        imageUrl={profileImageUrl}
+                    />
                 </div>
                 <div>
                     <div className="flex flex-row gap-2 py-4">
