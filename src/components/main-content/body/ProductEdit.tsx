@@ -16,7 +16,7 @@ export function ProductEdit() {
                 <div className="flex flex-row justify-end mb-4 gap-4">
                     <button
                         type="button"
-                        className="py-2 px-3 h-[30px] w-[45px] box-border inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-white text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                        className="py-2 px-3 h-[30px] box-border inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-white text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                     >
                         Cancel
                     </button>
