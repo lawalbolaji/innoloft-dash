@@ -1,20 +1,17 @@
 import { useSelector } from "react-redux";
-import { Product } from "../../../scenes/Product.slice";
-import { DeleteIcon } from "../../shared/icons/DeleteIcon";
-import { RibbonIcon } from "../../shared/icons/RibbonIcon";
-import { ProductEdit } from "./ProductEdit";
-import { ProductOwnerMeta } from "./ProductOwnerMeta";
-import { RootState } from "../../../store";
+import { ProductCoreEdit } from "./ProductCoreEdit";
+import { ProductOwnerInfo } from "./ProductOwnerInfo";
+import { Product } from "../../../../scenes/Product.slice";
+import { RootState } from "../../../../store";
+import { LocalEditor } from "../../../editor/Editor";
+import { RibbonIcon } from "../../../shared/icons/RibbonIcon";
 
 export type ProductViewProps = {
     productDetails: Product;
-    isView: boolean; // are we viewing or editing product
+    isView: boolean;
 };
 
-const description =
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-
-export function ProductView({ productDetails, isView }: ProductViewProps) {
+export function ProductCore({ productDetails, isView }: ProductViewProps) {
     const { hasUserSection } = useSelector((state: RootState) => state.configs.entity);
 
     return (
@@ -35,15 +32,6 @@ export function ProductView({ productDetails, isView }: ProductViewProps) {
                                     </div>
                                 </div>
                             </div>
-                            {!isView && (
-                                <div className="absolute z-10 top-0 right-0 h-[40px] w-[40px] border-l border-b rounded-bl-lg">
-                                    <div className="flex flex-col justify-center h-full">
-                                        <div className="bg-white w-[16px] h-[16px] m-auto">
-                                            <DeleteIcon />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                             <img
                                 className="object-contain w-full max-h-[300px]"
                                 src={productDetails.picture}
@@ -51,20 +39,31 @@ export function ProductView({ productDetails, isView }: ProductViewProps) {
                             />
                         </div>
                         {isView ? (
-                            <div className="p-4 box-border h-[40%] overflow-hidden">
-                                <h3 className="font-medium text-black h-[20%]">{productDetails.name}</h3>
-                                <p className="text-xs pt-1 text-gray-800 dark:text-gray-400 h-[80%] line-clamp-4 text-ellipsis leading-5">
-                                    {/* TODO: replace this with editor instance to render rich text product description */}
-                                    {description}
-                                </p>
+                            <div>
+                                <div className="px-2">
+                                    <div className="">
+                                        <h3 className="py-2 px-4 block w-full font-semibold text-black bg-white text-sm ">
+                                            {productDetails.name}
+                                        </h3>
+                                    </div>
+                                    <div className="h-[200px]">
+                                        {/* <!-- WYSIWYG --> */}
+                                        <div className="h-full">
+                                            <LocalEditor htmlString={productDetails.description} readonly={true} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         ) : (
-                            <ProductEdit />
+                            <ProductCoreEdit
+                                productDescription={productDetails.description}
+                                productName={productDetails.name}
+                            />
                         )}
                     </div>
                 </div>
                 {hasUserSection && (
-                    <ProductOwnerMeta
+                    <ProductOwnerInfo
                         profileImageUrl={productDetails.user.profilePicture}
                         address={productDetails.company.address}
                         companyName={productDetails.company.name}

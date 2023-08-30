@@ -1,8 +1,8 @@
-import { Product } from "../../../scenes/Product.slice";
-import { ClockIcon } from "../../shared/icons/ClockIcon";
-import { KnightIcon } from "../../shared/icons/KnightIcon";
-import { MoneyBagIcon } from "../../shared/icons/MoneyBagIcon";
-import { SettingsIcon } from "../../shared/icons/SettingsIcon";
+import { Product } from "../../../../scenes/Product.slice";
+import { ClockIcon } from "../../../shared/icons/ClockIcon";
+import { KnightIcon } from "../../../shared/icons/KnightIcon";
+import { MoneyBagIcon } from "../../../shared/icons/MoneyBagIcon";
+import { SettingsIcon } from "../../../shared/icons/SettingsIcon";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type OfferViewProps = {

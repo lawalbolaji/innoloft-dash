@@ -1,8 +1,8 @@
-import { Product } from "../../../scenes/Product.slice";
-import { ProfileHero } from "../../profile/ProfileHero";
-import { LocationIcon } from "../../shared/icons/LocationIcon";
+import { Product } from "../../../../scenes/Product.slice";
+import { ProfileHero } from "../../../profile/ProfileHero";
+import { LocationIcon } from "../../../shared/icons/LocationIcon";
 
-export function ProductOwnerMeta({
+export function ProductOwnerInfo({
     profileImageUrl,
     address,
     companyName,

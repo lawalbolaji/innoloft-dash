@@ -1,7 +1,7 @@
 import { Product } from "../../../scenes/Product.slice";
-import { OfferView } from "./OfferView";
-import { ProductView } from "./ProductView";
-import { VideoView } from "./VideoView";
+import { OfferView } from "./offer/OfferView";
+import { ProductCore } from "./product/ProductCore";
+import { VideoView } from "./video/VideoView";
 
 function convertYoutubeViewUrlToEmbed(url: string) {
     if (url.match(/^(https?:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/)) {
@@ -21,7 +21,7 @@ export function MainContentBody({ isView, productDetails }: { isView: boolean; p
         <>
             <div className="bg-white">
                 <div className="h-full border">
-                    <ProductView isView={isView} productDetails={productDetails} />
+                    <ProductCore isView={isView} productDetails={productDetails} />
                 </div>
             </div>
             <div className="w-full bg-white border">
