@@ -10,7 +10,7 @@ export function VideoView({ videoUrl, isView }: { videoUrl: string; isView: bool
                         <iframe className="h-96 w-full md:w-[75%]" src={videoUrl}></iframe>
                     </div>
                 ) : (
-                    <VideoEdit />
+                    <VideoEdit videoSourceUrl={videoUrl} />
                 )}
             </div>
         </div>

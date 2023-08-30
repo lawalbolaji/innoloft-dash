@@ -1,34 +1,54 @@
 import { useEffect, useState } from "react";
 import { LocalEditor } from "../../../editor/Editor";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../store";
-import { productUpdateIdled, updateProduct } from "../../../../scenes/Product.slice";
+import { AppDispatch } from "../../../../store";
+import {
+    productUpdateIdled,
+    selectProductDetails,
+    selectProductUpdateRequestStatus,
+    updateProduct,
+} from "../../../../scenes/Product.slice";
 import { useNavigate } from "react-router-dom";
 
-export function ProductCoreEdit({
-    productDescription,
-    productName,
-}: {
-    productDescription: string;
-    productName: string;
-}) {
+function useProductCoreLogic({ productName, productDescription }: ProductCoreEditType) {
     const [title, setTitle] = useState(productName);
     const [htmlSerializedEditorState, setHtmlSerializedEditorState] = useState(productDescription);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const { updateStatus, updateError } = useSelector((state: RootState) => state.product);
-    const productDetails = useSelector((state: RootState) => state.product.entity);
+    const updateStatus = useSelector(selectProductUpdateRequestStatus);
+    const productDetails = useSelector(selectProductDetails);
     const disableSubmitButton =
         updateStatus === "loading" || (htmlSerializedEditorState === productDescription && title === productName);
+
+    const handleUpdateProductDetails = () => {
+        dispatch(updateProduct({ name: productName, description: productDescription }));
+    };
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value);
+    };
 
     useEffect(() => {
         if (updateStatus === "success") {
             navigate(`/${productDetails?.id}/view`);
             dispatch(productUpdateIdled({}));
-        } else if (updateStatus === "error") {
-            console.log(updateError);
         }
-    }, [updateStatus, updateError, navigate, dispatch, productDetails]);
+    }, [updateStatus, dispatch, navigate, productDetails?.id]);
+
+    return { handleTitleChange, title, setHtmlSerializedEditorState, disableSubmitButton, handleUpdateProductDetails };
+}
+
+type ProductCoreEditType = {
+    productDescription: string;
+    productName: string;
+};
+
+export function ProductCoreEdit({ productDescription, productName }: ProductCoreEditType) {
+    const { handleTitleChange, title, setHtmlSerializedEditorState, disableSubmitButton, handleUpdateProductDetails } =
+        useProductCoreLogic({
+            productDescription,
+            productName,
+        });
 
     return (
         <div>
@@ -38,7 +58,7 @@ export function ProductCoreEdit({
                         type="text"
                         className="py-2 px-3 block w-full font-semibold text-black bg-white border border-[#D1D5DB] rounded text-sm focus:border-blue-500 focus:ring-blue-500"
                         value={title}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)}
+                        onChange={handleTitleChange}
                         placeholder="Enter product name here..."
                     />
                 </div>
@@ -55,24 +75,11 @@ export function ProductCoreEdit({
                     </div>
                 </div>
                 <div className="flex flex-row justify-end mb-4 gap-4">
-                    {/* <button
-                        type="button"
-                        className="disabled:opacity-75 disabled:hover:bg-white py-2 px-3 h-[30px] box-border inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-white text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                        disabled={htmlSerializedEditorState === productDescription && title === productName}
-                        onClick={() => {
-                            setTitle(productName);
-                            setHtmlSerializedEditorState(productDescription);
-                        }}
-                    >
-                        Cancel
-                    </button> */}
                     <button
                         type="button"
                         className="disabled:opacity-75 disabled:hover:bg-[#272E7180] disabled:bg-[#272E7180] py-2 pl-2 pr-4 h-[30px] box-border inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#272E71] text-white hover:bg-[#9f8eed] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                         disabled={disableSubmitButton}
-                        onClick={() => {
-                            dispatch(updateProduct({ name: productName, description: productDescription }));
-                        }}
+                        onClick={handleUpdateProductDetails}
                     >
                         <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path

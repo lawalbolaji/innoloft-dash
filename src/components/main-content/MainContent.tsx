@@ -2,10 +2,10 @@ import { MainContentBody } from "./body/MainContentBody";
 import { MainContentHeader } from "./header/MainContentHeader";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { ErrorComponent } from "../errors/Error";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { selectProductDetails, selectProductLoadRequestStatus } from "../../scenes/Product.slice";
 
 type Mode = "edit" | "view";
 function isModeType(x: string): x is Mode {
@@ -22,15 +22,31 @@ export function MainContent({ productId }: { productId: number }) {
     const urlMode = getModeFromUrlPath(pathname);
     const mode = isModeType(urlMode) ? urlMode : "view";
 
-    // loading state, product-details
-    const loadingState = useSelector((state: RootState) => state.product.status);
-    const productDetails = useSelector((state: RootState) => state.product.entity);
+    const loadingState = useSelector(selectProductLoadRequestStatus);
+    const productDetails = useSelector(selectProductDetails);
+
     const pageMap: Record<Mode[number], JSX.Element> = {
         loading: (
             <SkeletonTheme baseColor="#fff" highlightColor="#c0c0c0">
-                <p className="w-full">
-                    <Skeleton count={20} className="h-[40px]" />
-                </p>
+                <div className="w-full flex flex-col gap-y-8 justify-center">
+                    <div className="">
+                        <Skeleton count={1} className="h-[24px] w-full" />
+                    </div>
+                    <div className="flex flex-row align-middle gap-x-4">
+                        <div className="w-[60%]">
+                            <Skeleton count={14} className="h-[24px] w-full" />
+                        </div>
+                        <div className="flex-auto">
+                            <Skeleton count={8} className="h-[24px] w-full" />
+                        </div>
+                    </div>
+                    <div className="">
+                        <Skeleton count={5} className="h-[24px] w-full" />
+                    </div>
+                    <div className="">
+                        <Skeleton count={8} className="h-[24px] w-full" />
+                    </div>
+                </div>
             </SkeletonTheme>
         ),
         success: (
