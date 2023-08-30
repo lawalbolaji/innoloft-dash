@@ -3,9 +3,9 @@ import { MainContentHeader } from "./header/MainContentHeader";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ErrorComponent } from "../errors/Error";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { selectProductDetails, selectProductLoadRequestStatus } from "../../scenes/Product.slice";
+import { SkeletonLoader } from "../loader/SkeletonLoader";
 
 type Mode = "edit" | "view";
 function isModeType(x: string): x is Mode {
@@ -26,29 +26,7 @@ export function MainContent({ productId }: { productId: number }) {
     const productDetails = useSelector(selectProductDetails);
 
     const pageMap: Record<Mode[number], JSX.Element> = {
-        loading: (
-            <SkeletonTheme baseColor="#fff" highlightColor="#c0c0c0">
-                <div className="w-full flex flex-col gap-y-8 justify-center">
-                    <div className="">
-                        <Skeleton count={1} className="h-[24px] w-full" />
-                    </div>
-                    <div className="flex flex-row align-middle gap-x-4">
-                        <div className="w-[60%]">
-                            <Skeleton count={14} className="h-[24px] w-full" />
-                        </div>
-                        <div className="flex-auto">
-                            <Skeleton count={8} className="h-[24px] w-full" />
-                        </div>
-                    </div>
-                    <div className="">
-                        <Skeleton count={5} className="h-[24px] w-full" />
-                    </div>
-                    <div className="">
-                        <Skeleton count={8} className="h-[24px] w-full" />
-                    </div>
-                </div>
-            </SkeletonTheme>
-        ),
+        loading: <SkeletonLoader />,
         success: (
             <div className="flex-auto py-4 px-2 h-full">
                 <div className="flex flex-col gap-y-4 h-full w-full overflow-auto hide-scroll">
